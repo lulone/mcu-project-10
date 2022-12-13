@@ -1,5 +1,7 @@
 Debug
-.setting
+.settings
+build
+*.launch
 
 *.workspace
 *.pdsbak
