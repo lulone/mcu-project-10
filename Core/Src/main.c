@@ -21,7 +21,13 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-
+#include "global.h"
+#include "button.h"
+#include "software_timer.h"
+#include "fsm_automatic.h"
+#include "fsm_manual.h"
+#include "fsm_timing.h"
+#include <stdio.h>
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -60,7 +66,19 @@ static void MX_TIM2_Init(void);
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
+void test_IO(){
+	HAL_GPIO_WritePin(D2_GPIO_Port, D2_Pin, HAL_GPIO_ReadPin(A1_GPIO_Port, A1_Pin));
+	HAL_GPIO_WritePin(D3_GPIO_Port, D3_Pin, HAL_GPIO_ReadPin(A2_GPIO_Port, A2_Pin));
 
+	HAL_GPIO_WritePin(D4_GPIO_Port, D4_Pin, HAL_GPIO_ReadPin(A0_GPIO_Port, A0_Pin));
+
+	HAL_GPIO_WritePin(D5_GPIO_Port, D5_Pin, HAL_GPIO_ReadPin(A3_GPIO_Port, A3_Pin));
+}
+
+char str[20];
+void display_traffic(int num){
+	HAL_UART_Transmit(&huart2, (uint8_t *)str, sprintf(str, "!7SEG:%d, %d#\r\n",status, num), 500);
+}
 /* USER CODE END 0 */
 
 /**
@@ -95,13 +113,30 @@ int main(void)
   MX_TIM3_Init();
   MX_TIM2_Init();
   /* USER CODE BEGIN 2 */
-
+  HAL_TIM_Base_Start_IT(&htim2);
+  HAL_TIM_PWM_Start(&htim3, TIM_CHANNEL_1);
   /* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
+  status = AUTO_INIT;
+  set_timer_display(DURATION_DISPLAY);
+  set_timer_traffic(DURATION_INIT);
+
+  timing_counter_green = DURATION_RED_GREEN;
+  timing_counter_yellow = DURATION_RED_YELLOW;
   while (1)
   {
+//	  test_IO();
+
+	  fsm_automatic_run();
+	  fsm_manual_run();
+	  fsm_timing_run();
+
+	  if(timer_display_flag == 1){
+		  display_traffic(counter_on_7seg);
+		  set_timer_display(DURATION_DISPLAY);
+	  }
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
