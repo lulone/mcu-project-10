@@ -8,6 +8,34 @@
 #include "fsm_automatic.h"
 
 void button_processing_automatic(){
+	
+	switch (button_status[0]) {
+		case BUTTON_RELEASED:
+			if(is_button_pressed(0)){
+				is_ped = 1;
+				ped_road = !red_road;
+
+				button_status[0] = BUTTON_PRESSED;
+				clear_timer_button();
+			}
+
+			if(timer_button_flag == 1){
+
+			}
+			break;
+		case BUTTON_PRESSED:
+			if(!is_button_pressed(0)){
+				button_status[0] = BUTTON_RELEASED;
+				set_timer_button(DURATION_BUTTON_SLEEP);
+			}
+
+			if(is_button_long_pressed(0)){
+
+			}
+			break;
+		default:
+			break;
+	}
 	switch (button_status[1]) {
 		case BUTTON_RELEASED:
 			if(is_button_pressed(1)){
@@ -88,34 +116,6 @@ void button_processing_automatic(){
 			if(is_button_long_pressed(3)){
 				status = MAN_INIT;
 				set_timer_traffic(DURATION_INIT);
-			}
-			break;
-		default:
-			break;
-	}
-
-	switch (button_status[4]) {
-		case BUTTON_RELEASED:
-			if(is_button_pressed(4)){
-				is_ped = 1;
-				ped_road = !red_road;
-
-				button_status[4] = BUTTON_PRESSED;
-				clear_timer_button();
-			}
-
-			if(timer_button_flag == 1){
-
-			}
-			break;
-		case BUTTON_PRESSED:
-			if(!is_button_pressed(4)){
-				button_status[4] = BUTTON_RELEASED;
-				set_timer_button(DURATION_BUTTON_SLEEP);
-			}
-
-			if(is_button_long_pressed(4)){
-
 			}
 			break;
 		default:
