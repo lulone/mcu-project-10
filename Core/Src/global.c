@@ -17,4 +17,7 @@ int counter_on_7seg = 0;
 
 int is_sleeped = 0;
 
+int is_ped = 0;
+int ped_road = 0;
+
 int button_status[] = {BUTTON_RELEASED};

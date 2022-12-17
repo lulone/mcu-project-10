@@ -12,6 +12,7 @@
 #include "button.h"
 #include "traffic_light.h"
 #include "software_timer.h"
+#include "pedestrian_light.h"
 
 /*
  * fsm for automatic modes

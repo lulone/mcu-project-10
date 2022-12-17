@@ -69,6 +69,12 @@ extern int is_sleeped;
 #define DURATION_AFTER_FIRST_LONG_PRESS 1000
 
 /*
+ * Pedestrian light
+ */
+extern int is_ped;
+extern int ped_road;
+
+/*
  * Which road is RED during all automatic and manual modes
  * value : 0 or 1
  */

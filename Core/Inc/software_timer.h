@@ -32,6 +32,12 @@ void set_timer_button(int duration);
 void clear_timer_button();
 
 /*
+ * timer for pedestrian light
+ */
+extern int timer_ped_flag;
+void set_timer_pedestrian(int duration);
+void clear_timer_pedestrian();
+/*
  * ISR
 */
 void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim);

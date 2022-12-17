@@ -69,6 +69,22 @@ void clear_timer_button(){
 }
 
 /*
+ * timer for pedestrian light
+ */
+int timer_ped_flag = 0;
+int timer_ped_counter = 0;
+
+void set_timer_pedestrian(int duration){
+	set_timer(&timer_ped_flag, &timer_ped_counter, duration);
+}
+void timer_pedestrian_run(){
+	timer_run(&timer_ped_flag, &timer_ped_counter);
+}
+void clear_timer_pedestrian(){
+	clear_timer(&timer_ped_flag, &timer_ped_counter);
+}
+
+/*
  * ISR
  */
 void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim){
@@ -76,4 +92,5 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim){
 	timer_traffic_run();
 	timer_display_run();
 	timer_button_run();
+	timer_pedestrian_run();
 }
